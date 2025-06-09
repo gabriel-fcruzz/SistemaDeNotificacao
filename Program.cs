@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaDeNotificacao.Data;
 using SistemaDeNotificacao.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SistemaDeNotificacao
 {
@@ -10,12 +11,10 @@ namespace SistemaDeNotificacao
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Adicionar a conexão com o banco de dados
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            // 1. Adicionar a conexï¿½o com o banco de dados
+            builder.Services.AddDbContext<ApplicationDbContext>();
 
-            // 2. Adicionar os serviços do Identity
+            // 2. Adicionar os serviï¿½os do Identity
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -36,7 +35,7 @@ namespace SistemaDeNotificacao
 
             app.UseRouting();
 
-            // 3. Adicionar o middleware de autenticação
+            // 3. Adicionar o middleware de autenticaï¿½ï¿½o
             app.UseAuthentication();
             app.UseAuthorization();
 
