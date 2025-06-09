@@ -12,7 +12,11 @@ namespace SistemaDeNotificacao
             var builder = WebApplication.CreateBuilder(args);
 
             // 1. Adicionar a conex�o com o banco de dados
-            builder.Services.AddDbContext<ApplicationDbContext>();
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // Configure o DbContext aqui - ESTA É A FORMA CORRETA
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
             // 2. Adicionar os servi�os do Identity
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

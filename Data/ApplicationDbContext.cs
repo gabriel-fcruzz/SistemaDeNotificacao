@@ -6,17 +6,9 @@ namespace SistemaDeNotificacao.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> // Use ApplicationUser aqui
     {
-        protected override void OnConfiguring
-(
-DbContextOptionsBuilder optionsBuilder
-)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
         {
-            var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-            string conn = config.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(conn);
         }
     }
 }
