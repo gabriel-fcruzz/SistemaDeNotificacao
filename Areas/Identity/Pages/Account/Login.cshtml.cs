@@ -116,7 +116,14 @@ namespace SistemaDeNotificacao.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return RedirectToPage("/Privacy"); // ou outro caminho que você tenha
+                    }
+
+                    return RedirectToPage("/Index");
                 }
                 if (result.RequiresTwoFactor)
                 {

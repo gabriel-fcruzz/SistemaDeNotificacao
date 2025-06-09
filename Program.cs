@@ -1,13 +1,13 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeNotificacao.Data;
 using SistemaDeNotificacao.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace SistemaDeNotificacao
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -20,33 +20,35 @@ namespace SistemaDeNotificacao
 
             // 2. Adicionar os servi�os do Identity
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                            .AddRoles<IdentityRole>()
+                            .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Add services to the container.
-            builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/");
+                options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Login");
+            });
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
-            // 3. Adicionar o middleware de autentica��o
             app.UseAuthentication();
             app.UseAuthorization();
 
-
-            app.MapStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
+
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                await IdentitySeed.SeedAsync(services);
+            }
+
 
             app.Run();
         }
