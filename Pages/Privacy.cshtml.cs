@@ -1,21 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using SistemaDeNotificacao.Data;
+using SistemaDeNotificacao.Models;
 
 namespace SistemaDeNotificacao.Pages
 {
     [Authorize(Roles = "Admin")]
     public class PrivacyModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public PrivacyModel(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public void OnGet()
+        public IList<Evento> Eventos { get; set; }
+
+        public async Task OnGetAsync()
         {
+            Eventos = await _context.Eventos
+                .OrderByDescending(e => e.DataEvento)
+                .ToListAsync();
         }
     }
 
