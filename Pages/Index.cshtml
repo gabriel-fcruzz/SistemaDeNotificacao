@@ -4,7 +4,18 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Eventos da Loja</h2>
+<ul>
+    @foreach (var evento in Model.Eventos)
+    {
+        <li><strong>@evento.Titulo:</strong> @evento.Descricao (@evento.DataEvento.ToShortDateString())</li>
+    }
+</ul>
+
+<h2>Suas Notificações</h2>
+<ul>
+    @foreach (var notificacao in Model.Notificacoes)
+    {
+        <li>@notificacao.Mensagem (@notificacao.DataCriacao.ToShortDateString())</li>
+    }
+</ul>

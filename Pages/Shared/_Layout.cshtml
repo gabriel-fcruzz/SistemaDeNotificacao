@@ -26,7 +26,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        @if (!User.Identity?.IsAuthenticated ?? true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                            </li>
+                        }
+
                     </ul>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-flex">
+                            <span class="navbar-text me-2 text-dark">Olá, @User.Identity.Name</span>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                        </form>
+                    }
                 </div>
             </div>
         </nav>
