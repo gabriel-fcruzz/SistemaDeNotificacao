@@ -6,5 +6,7 @@
         public string UsuarioId { get; set; } // ou int se usar Id numérico
         public string Mensagem { get; set; }
         public DateTime DataCriacao { get; set; }
+        public DateTime DataEnvio { get; set; }
+        public bool Enviado { get; set; }
     }
 }

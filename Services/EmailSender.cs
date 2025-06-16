@@ -21,6 +21,7 @@ public class EmailSender : IEmailSender
         })
         {
             var mailMessage = new MailMessage(_smtpSettings.UserName, email, subject, message);
+            mailMessage.IsBodyHtml = true;
             await client.SendMailAsync(mailMessage);
         }
     }

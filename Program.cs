@@ -28,6 +28,7 @@ namespace SistemaDeNotificacao
             {
                 options.Conventions.AuthorizeFolder("/");
                 options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Login");
+                options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/ConfirmEmail");
             });
 
             //4. Add EmailSender

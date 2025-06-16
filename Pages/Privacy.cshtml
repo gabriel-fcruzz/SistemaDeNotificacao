@@ -1,8 +1,9 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Admin - Gerenciar";
 }
+
 <h1>Gerenciar Eventos</h1>
 
 <p>
@@ -15,7 +16,7 @@
             <th>Título</th>
             <th>Data do Evento</th>
             <th>Descrição</th>
-            <th></th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -28,12 +29,68 @@
                 <td>
                     <a asp-page="EventCRUD/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
                     <a asp-page="EventCRUD/Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
+                    <form method="post" asp-page-handler="DeleteEvento" asp-route-id="@item.Id" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
                         <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                     </form>
-
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<hr />
+
+<h1>Gerenciar Notificações</h1>
+
+<p>
+    <a asp-page="NotificationCRUD/Create" asp-route-userId="@Model.SelectedUserId" class="btn btn-success">Criar Nova Notificação</a>
+</p>
+
+<form method="get">
+    <div class="form-group">
+        <label for="SelectedUserId">Selecione o Usuário:</label>
+        <select asp-for="SelectedUserId" asp-items="Model.UserOptions" class="form-control" onchange="this.form.submit()">
+            <option value="">-- Selecione --</option>
+        </select>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.SelectedUserId))
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mensagem</th>
+                <th>Data Criação</th>
+                <th>Data Envio</th>
+                <th>Enviado?</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Notificacoes)
+            {
+                <tr>
+                    <td>@item.Mensagem</td>
+                    <td>@item.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.DataEnvio.ToString("dd/MM/yyyy")</td>
+                    <td>@(item.Enviado ? "Sim" : "Não")</td>
+                    <td>
+                        <a asp-page="NotificationCRUD/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                        <form method="post" asp-page-handler="DeleteNotificacao" asp-route-id="@item.Id" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+
+                        @if (!item.Enviado)
+                        {
+                            <form method="post" asp-page-handler="EnviarNotificacao" asp-route-id="@item.Id" style="display:inline;" onsubmit="return confirm('Deseja enviar agora?');">
+                                <button type="submit" class="btn btn-sm btn-primary">Enviar</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

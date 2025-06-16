@@ -16,6 +16,6 @@
 <ul>
     @foreach (var notificacao in Model.Notificacoes)
     {
-        <li>@notificacao.Mensagem (@notificacao.DataCriacao.ToShortDateString())</li>
+        <li>@notificacao.Mensagem (@notificacao.DataEnvio.ToShortDateString())</li>
     }
 </ul>
