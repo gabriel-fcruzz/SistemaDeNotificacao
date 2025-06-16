@@ -126,16 +126,11 @@ namespace SistemaDeNotificacao.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    // Criar a role se não existir
                     if (!await _roleManager.RoleExistsAsync("User"))
                     {
                         await _roleManager.CreateAsync(new IdentityRole("User"));
                     }
-
-                    // Atribuir o usuário à role
                     await _userManager.AddToRoleAsync(user, "User");
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -151,6 +146,7 @@ namespace SistemaDeNotificacao.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
+                        // Não faz login aqui
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
@@ -158,8 +154,9 @@ namespace SistemaDeNotificacao.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                }
-                foreach (var error in result.Errors)
+
+            }
+            foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }

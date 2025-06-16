@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeNotificacao.Data;
 using SistemaDeNotificacao.Models;
@@ -28,6 +29,10 @@ namespace SistemaDeNotificacao
                 options.Conventions.AuthorizeFolder("/");
                 options.Conventions.AllowAnonymousToAreaPage("Identity", "/Account/Login");
             });
+
+            //4. Add EmailSender
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 

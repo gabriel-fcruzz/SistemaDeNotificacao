@@ -25,6 +25,19 @@ namespace SistemaDeNotificacao.Pages
                 .OrderByDescending(e => e.DataEvento)
                 .ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            var evento = await _context.Eventos.FindAsync(id);
+
+            if (evento != null)
+            {
+                _context.Eventos.Remove(evento);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
+        }
     }
 
 }

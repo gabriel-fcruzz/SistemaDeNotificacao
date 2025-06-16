@@ -26,9 +26,12 @@
                 <td>@item.DataEvento.ToString("dd/MM/yyyy")</td>
                 <td>@item.Descricao</td>
                 <td>
-                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
-                    <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Excluir</a>
-                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a>
+                    <a asp-page="EventCRUD/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-page="EventCRUD/Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalhes</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.Id" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este evento?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                    </form>
+
                 </td>
             </tr>
         }

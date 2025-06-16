@@ -1,0 +1,19 @@
+﻿@page
+@model SistemaDeNotificacao.Pages.EventCRUD.DetailsModel
+@{
+    ViewData["Title"] = "Detalhes do Evento";
+}
+
+<h1>Detalhes do Evento</h1>
+
+<div>
+    <h3>@Model.Evento.Titulo</h3>
+    <p><strong>Data do Evento:</strong> @Model.Evento.DataEvento.ToString("dd/MM/yyyy")</p>
+    <p><strong>Descrição:</strong></p>
+    <p>@Model.Evento.Descricao</p>
+</div>
+
+<p>
+    <a asp-page="Edit" asp-route-id="@Model.Evento.Id" class="btn btn-warning">Editar</a>
+    <a asp-page="/Privacy" class="btn btn-secondary">Voltar</a>
+</p>
