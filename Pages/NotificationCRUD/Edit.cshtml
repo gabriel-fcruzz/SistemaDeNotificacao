@@ -1,0 +1,31 @@
+﻿@page "{id:int}"
+@model SistemaDeNotificacao.Pages.NotificationCRUD.EditModel
+@{
+    ViewData["Title"] = "Editar Notificação";
+}
+
+<h1>Editar Notificação</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Notificacao.Mensagem">Mensagem</label>
+        <textarea asp-for="Notificacao.Mensagem" class="form-control"></textarea>
+        <span asp-validation-for="Notificacao.Mensagem" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notificacao.DataEnvio">Data de Envio</label>
+        <input asp-for="Notificacao.DataEnvio" class="form-control" type="date" />
+        <span asp-validation-for="Notificacao.DataEnvio" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="Notificacao.Id" />
+    <input type="hidden" asp-for="Notificacao.UsuarioId" />
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-page="/Privacy" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

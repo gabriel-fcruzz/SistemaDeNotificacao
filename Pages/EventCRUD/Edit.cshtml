@@ -1,12 +1,14 @@
 ﻿@page
-@model SistemaDeNotificacao.Pages.EventCRUD.CreateModel
+@model SistemaDeNotificacao.Pages.EventCRUD.EditModel
 @{
-    ViewData["Title"] = "Criar Evento";
+    ViewData["Title"] = "Editar Evento";
 }
 
-<h1>Criar Evento</h1>
+<h1>Editar Evento</h1>
 
 <form method="post">
+    <input type="hidden" asp-for="Evento.Id" />
+
     <div class="form-group">
         <label asp-for="Evento.Titulo"></label>
         <input asp-for="Evento.Titulo" class="form-control" />
@@ -22,6 +24,7 @@
         <textarea asp-for="Evento.Descricao" class="form-control"></textarea>
         <span asp-validation-for="Evento.Descricao" class="text-danger"></span>
     </div>
+
     <button type="submit" class="btn btn-success">Salvar</button>
     <a asp-page="/Privacy" class="btn btn-secondary">Cancelar</a>
 </form>

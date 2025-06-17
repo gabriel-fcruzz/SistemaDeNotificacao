@@ -1,0 +1,36 @@
+﻿@page
+@model SistemaDeNotificacao.Pages.NotificationCRUD.CreateModel
+@{
+    ViewData["Title"] = "Criar Notificação";
+}
+
+<h1>Criar Notificação</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Notificacao.Mensagem">Mensagem</label>
+        <textarea asp-for="Notificacao.Mensagem" class="form-control"></textarea>
+        <span asp-validation-for="Notificacao.Mensagem" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notificacao.DataEnvio">Data de Envio</label>
+        <input asp-for="Notificacao.DataEnvio" class="form-control" type="date" />
+        <span asp-validation-for="Notificacao.DataEnvio" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Usuário Destinatário</label>
+        <select asp-for="Notificacao.UsuarioId" class="form-control">
+            <option value="">-- Selecione um Usuário --</option>
+            @foreach (var usuario in Model.Usuarios)
+            {
+                <option value="@usuario.Id">@usuario.Email</option>
+            }
+        </select>
+        <span asp-validation-for="Notificacao.UsuarioId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Criar</button>
+    <a asp-page="/Privacy" class="btn btn-secondary">Cancelar</a>
+</form>

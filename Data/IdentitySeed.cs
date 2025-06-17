@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SistemaDeNotificacao.Data;
 using SistemaDeNotificacao.Models;
 using System;
@@ -38,7 +39,7 @@ public static class IdentitySeed
             await userManager.AddToRoleAsync(adminUser, "Admin");
 
         // 3. Criar eventos se não existirem  
-        if (!context.Eventos.Any())
+        if (!await context.Eventos.AnyAsync())
         {
             context.Eventos.AddRange(
                 new Evento
@@ -57,20 +58,24 @@ public static class IdentitySeed
         }
 
         // 4. Criar notificações de exemplo (pra admin mesmo, se quiser ver funcionando)  
-        if (!context.Notificacoes.Any())
+        if (!await context.Notificacoes.AnyAsync())
         {
             context.Notificacoes.AddRange(
                 new Notificacao
                 {
                     UsuarioId = adminUser.Id,
-                    Mensagem = "Sua bicicleta precisa ser devolvida até amanhã.",
-                    DataCriacao = DateTime.Now
+                    Mensagem = "Sua bicicleta precisa ser devolvida!",
+                    DataCriacao = DateTime.Now,
+                    DataEnvio = new DateTime(2025, 6, 19), // Data para envio da notificação
+                    Enviado = false
                 },
                 new Notificacao
                 {
                     UsuarioId = adminUser.Id,
                     Mensagem = "Promoção especial: alugue 3 dias e pague 2!",
-                    DataCriacao = DateTime.Now
+                    DataCriacao = DateTime.Now,
+                    DataEnvio = new DateTime(2025, 6, 22),
+                    Enviado = false
                 }
             );
         }
