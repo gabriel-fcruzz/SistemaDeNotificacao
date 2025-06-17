@@ -4,18 +4,35 @@
     ViewData["Title"] = "Home page";
 }
 
-<h2>Eventos da Loja</h2>
-<ul>
-    @foreach (var evento in Model.Eventos)
-    {
-        <li><strong>@evento.Titulo:</strong> @evento.Descricao (@evento.DataEvento.ToShortDateString())</li>
-    }
-</ul>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Eventos da Loja -->
+        <div class="col-md-6">
+            <h2>Eventos da Loja</h2>
+            @foreach (var evento in Model.Eventos)
+            {
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@evento.Titulo</h5>
+                        <p class="card-text">@evento.Descricao</p>
+                        <p class="card-text"><small class="text-muted">Data: @evento.DataEvento.ToShortDateString()</small></p>
+                    </div>
+                </div>
+            }
+        </div>
 
-<h2>Suas Notificações</h2>
-<ul>
-    @foreach (var notificacao in Model.Notificacoes)
-    {
-        <li>@notificacao.Mensagem (@notificacao.DataEnvio.ToShortDateString())</li>
-    }
-</ul>
+        <!-- Suas Notificações -->
+        <div class="col-md-6">
+            <h2>Suas Notificações</h2>
+            @foreach (var notificacao in Model.Notificacoes)
+            {
+                <div class="card mb-3 border-primary shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">@notificacao.Mensagem</p>
+                        <p class="card-text"><small class="text-muted">Enviada em: @notificacao.DataEnvio.ToShortDateString()</small></p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
