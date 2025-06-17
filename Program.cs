@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeNotificacao.Data;
 using SistemaDeNotificacao.Models;
+using SistemaDeNotificacao.Services;
 
 namespace SistemaDeNotificacao
 {
@@ -34,6 +35,9 @@ namespace SistemaDeNotificacao
             //4. Add EmailSender
             builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+            //4. Add Open Router service
+            builder.Services.AddHttpClient<OpenRouterService>();
 
             var app = builder.Build();
 

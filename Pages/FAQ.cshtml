@@ -1,0 +1,35 @@
+﻿@page
+@model SistemaDeNotificacao.Pages.FAQModel
+@{
+    ViewData["Title"] = "Perguntas Frequentes";
+}
+
+<div class="container mt-4">
+    <h2>Pergunte à nossa IA</h2>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="Pergunta">Sua Pergunta:</label>
+            <input type="text" asp-for="Pergunta" class="form-control" placeholder="Ex: Qual o horário de funcionamento?">
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Perguntar</button>
+    </form>
+
+    @if (Model.Resposta != null)
+    {
+        <div class="alert alert-success mt-3">
+            <strong>Resposta da IA:</strong>
+            <p>@Model.Resposta</p>
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-3">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</div>
