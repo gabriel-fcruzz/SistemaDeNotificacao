@@ -7,7 +7,7 @@ namespace SistemaDeNotificacao.Services
     public class OpenRouterService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _apiKey = "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";
+        private readonly string _apiKey = "";
 
         public OpenRouterService(HttpClient httpClient)
         {
